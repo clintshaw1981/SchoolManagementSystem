@@ -2,6 +2,10 @@ package com.mpec.sms.Model;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
+
 @Entity
 @Table(name = "instructors")
 public class Instructor {
@@ -16,13 +20,39 @@ public class Instructor {
     private String address;
     @Column(name = "email")
     private String email;
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "course_details")
+    private Course course;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "course_details",
+            joinColumns = @JoinColumn(name = "instructor_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    private Set<Course> courses = new HashSet<>();
     public Long getId() {
         return id;
     }
     public Instructor() {
 
     }
-
     public Instructor(Long id, String firstName, String lastName, String address, String email) {
         super();
         this.id = id;

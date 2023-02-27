@@ -1,6 +1,12 @@
 package com.mpec.sms.Model;
 
 import jakarta.persistence.*;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Entity
 @Table(name = "courses")
 public class Course {
@@ -12,6 +18,16 @@ public class Course {
     @Column(name = "content")
     private String content;
 
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "courses"
+    )
+    private Set<Student> students = new HashSet<>();
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "courses"
+    )
+    private Set<Instructor> instructors = new HashSet<>();
     public Course() {
 
     }

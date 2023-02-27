@@ -1,7 +1,12 @@
 package com.mpec.sms.Model;
 
 import jakarta.persistence.*;
-    @Entity
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
     @Table(name = "students")
     public class Student {
         @Id
@@ -21,7 +26,13 @@ import jakarta.persistence.*;
         public Student() {
 
         }
-
+        @ManyToMany(cascade = CascadeType.ALL)
+        @JoinTable(
+                name = "course_details",
+                joinColumns = @JoinColumn(name = "student_id"),
+                inverseJoinColumns = @JoinColumn(name = "course_id")
+        )
+        private Set<Course> courses = new HashSet<>();
         public Student(Long id, String firstName, String lastName, String address, String email) {
             super();
             this.id = id;
