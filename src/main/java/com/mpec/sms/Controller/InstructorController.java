@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class InstructorController {
+
     private InstructorService instructorService;
     public InstructorController(InstructorService instructorService) {
         super();
