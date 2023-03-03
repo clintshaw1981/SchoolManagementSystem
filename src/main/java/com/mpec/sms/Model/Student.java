@@ -28,7 +28,7 @@ import java.util.Set;
         }
         @ManyToMany(cascade = CascadeType.ALL)
         @JoinTable(
-                name = "course_details",
+                name = "student_courses",
                 joinColumns = @JoinColumn(name = "student_id"),
                 inverseJoinColumns = @JoinColumn(name = "course_id")
         )

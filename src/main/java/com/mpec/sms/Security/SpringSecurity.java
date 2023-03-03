@@ -26,15 +26,15 @@ public class SpringSecurity {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http
                 .authorizeHttpRequests((authorize) ->
                         authorize.requestMatchers("/register/**").permitAll()
-                                .requestMatchers("/index").permitAll()
-                                .requestMatchers("/users").hasRole("ADMIN")
+                                .requestMatchers("/index/").permitAll()
+                                .requestMatchers("/users/**").hasRole("ADMIN")
                                 .requestMatchers("/students/**").hasRole("ADMIN")
                                 .requestMatchers("/courses/**").hasRole("ADMIN")
                                 .requestMatchers("/instructors/**").hasRole("ADMIN")
-
+                                //.anyRequest().hasRole("ADMIN")
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")
@@ -46,8 +46,10 @@ public class SpringSecurity {
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                                 .permitAll()
                 );
+
         return http.build();
     }
+
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

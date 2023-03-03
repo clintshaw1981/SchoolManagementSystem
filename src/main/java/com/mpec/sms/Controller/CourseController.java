@@ -2,6 +2,7 @@ package com.mpec.sms.Controller;
 
 import com.mpec.sms.Model.Course;
 import com.mpec.sms.Service.CourseService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ public class CourseController {
         this.courseService = courseService;
     }
     @GetMapping("/courses")
+    @PreAuthorize("hasAuthority('user')")
     public String listCourses(Model model) {
         model.addAttribute("courses", courseService.getAllCourses());
         return "courses";

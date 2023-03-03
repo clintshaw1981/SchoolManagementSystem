@@ -20,15 +20,12 @@ public class Instructor {
     private String address;
     @Column(name = "email")
     private String email;
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "instructor_courses",
+            joinColumns = @JoinColumn(name = "instructor_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    private Set<Course> courses = new HashSet<>();
     public Set<Course> getCourses() {
         return courses;
     }
@@ -37,21 +34,7 @@ public class Instructor {
         this.courses = courses;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "course_details")
-    private Course course;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "course_details",
-            joinColumns = @JoinColumn(name = "instructor_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id")
-    )
-    private Set<Course> courses = new HashSet<>();
-    public Long getId() {
-        return id;
-    }
     public Instructor() {
-
     }
     public Instructor(Long id, String firstName, String lastName, String address, String email) {
         super();
@@ -60,6 +43,11 @@ public class Instructor {
         this.lastName = lastName;
         this.address = address;
         this.email = email;
+    }
+
+
+    public Long getId() {
+        return id;
     }
 
     public void setId(Long id) {
