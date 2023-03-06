@@ -2,7 +2,6 @@ package com.mpec.sms.Model;
 
 import jakarta.persistence.*;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,7 +9,7 @@ import java.util.Set;
     @Table(name = "students")
     public class Student {
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
+        @GeneratedValue(strategy = GenerationType.SEQUENCE)
         private Long id;
         @Column(name = "first_name", nullable = false)
         private String firstName;
@@ -20,12 +19,6 @@ import java.util.Set;
         private String address;
         @Column(name = "email")
         private String email;
-        public Long getId() {
-            return id;
-        }
-        public Student() {
-
-        }
         @ManyToMany(cascade = CascadeType.ALL)
         @JoinTable(
                 name = "student_courses",
@@ -33,7 +26,7 @@ import java.util.Set;
                 inverseJoinColumns = @JoinColumn(name = "course_id")
         )
         private Set<Course> courses = new HashSet<>();
-        public Student(Long id, String firstName, String lastName, String address, String email) {
+        public Student() {
             super();
             this.id = id;
             this.firstName = firstName;
@@ -46,7 +39,11 @@ import java.util.Set;
             this.id = id;
         }
 
-        public String getFirstName() {
+    public Long getId() {
+        return id;
+    }
+
+    public String getFirstName() {
             return firstName;
         }
 
@@ -77,6 +74,8 @@ import java.util.Set;
         public void setEmail(String email) {
             this.email = email;
         }
-    }
+
+
+}
 
 
